@@ -1,0 +1,11 @@
+﻿# OS junk
+.DS_Store
+Thumbs.db
+
+# Node / tooling
+node_modules/
+.wrangler/
+
+# Editor
+.vscode/
+.idea/

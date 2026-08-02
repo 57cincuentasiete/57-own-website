@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="57&rsquo;s own website — profile and blog of [Your Name].">
+  <title>57&rsquo;s own website — Home</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>57</text></svg>">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">57&rsquo;s own website</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+      <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-kicker">Hello, I&rsquo;m</p>
+        <h1>[Your Name]</h1>
+        <p class="hero-tagline">A short tagline about who you are — builder, writer, creator, or whatever fits.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="profile.html">View My Profile</a>
+          <a class="btn btn-outline" href="blog.html">Read My Blog</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>About Me</h2>
+          <a class="text-link" href="profile.html">Full profile &rarr;</a>
+        </div>
+        <p class="lead">This is where your short introduction goes. Describe what you do, what you care about, and why people should keep reading.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Latest from the Blog</h2>
+          <a class="text-link" href="blog.html">All posts &rarr;</a>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3><a href="posts/welcome.html">Welcome to my new site</a></h3>
+            <p class="card-meta">Aug 2, 2026 · 2 min read</p>
+            <p>Your first post lives here. Replace this placeholder with a real introduction to your site and what you plan to write about.</p>
+          </article>
+          <article class="card">
+            <h3>Your next post idea</h3>
+            <p class="card-meta">Soon · 3 min read</p>
+            <p>Duplicate this card and the matching file in <code>posts/</code> to grow your blog. There&rsquo;s no database — just clean HTML you control.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> 57&rsquo;s own website. Built with care.</p>
+      <p class="footer-links">
+        <a href="#">GitHub</a> · <a href="#">Twitter / X</a> · <a href="mailto:you@example.com">Email</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

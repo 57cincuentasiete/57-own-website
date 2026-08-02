@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blog — 57&rsquo;s own website.">
+  <title>Blog — 57&rsquo;s own website</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>57</text></svg>">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">57&rsquo;s own website</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="blog.html" class="active">Blog</a>
+      </nav>
+      <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Blog</h1>
+        <p class="lead">Notes, ideas, and stories. New posts whenever I have something worth saying.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="post-list">
+          <article class="card">
+            <h2><a href="posts/welcome.html">Welcome to my new site</a></h2>
+            <p class="card-meta">Aug 2, 2026 · 2 min read</p>
+            <p>Your first post lives here. Replace this placeholder with a real introduction to your site and what you plan to write about.</p>
+            <a class="text-link" href="posts/welcome.html">Read post &rarr;</a>
+          </article>
+
+          <article class="card">
+            <h2>Your next post idea</h2>
+            <p class="card-meta">Coming soon</p>
+            <p>Create a new file in <code>posts/</code>, copy the template from <code>posts/welcome.html</code>, and link it here.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> 57&rsquo;s own website. Built with care.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
