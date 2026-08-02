@@ -1,5 +1,5 @@
 ﻿name = "57fiftyseven"
 compatibility_date = "2026-08-02"
 
-[pages]
-build_output_dir = "."
+[assets]
+directory = "."

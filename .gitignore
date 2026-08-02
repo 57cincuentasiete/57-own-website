@@ -9,3 +9,12 @@ node_modules/
 # Editor
 .vscode/
 .idea/
+
+# Secrets / local config
+.env
+.env.*
+*.pem
+*.key
+
+# Logs
+*.log

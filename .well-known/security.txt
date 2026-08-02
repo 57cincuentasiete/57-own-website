@@ -1,0 +1,7 @@
+# Security policy for 57's own website (https://www.57fiftyseven.top)
+# TODO: replace the placeholder contact below with your real email address.
+
+Contact: mailto:you@example.com
+Expires: 2027-08-03
+Preferred-Languages: en
+Canonical: https://www.57fiftyseven.top/.well-known/security.txt
