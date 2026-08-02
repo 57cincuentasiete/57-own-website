@@ -72,9 +72,29 @@
       <p class="footer-links"><!-- CMS:site.footer.links -->
         <a href="#">GitHub</a> · <a href="#">Twitter / X</a> · <a href="mailto:you@example.com">Email</a>
       <!-- /CMS:site.footer.links --></p>
+      <button class="admin-entry" id="admin-entry" type="button">🔒 Admin</button>
     </div>
   </footer>
 
+  <div class="admin-modal" id="admin-modal" hidden>
+    <div class="admin-modal-card" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
+      <button class="admin-modal-close" id="admin-modal-close" type="button" aria-label="Close">×</button>
+      <h2 id="admin-modal-title">Admin sign in</h2>
+      <p class="muted">Enter your credentials to open the panel.</p>
+      <form id="admin-entry-form" novalidate>
+        <label class="admin-modal-field">Name
+          <input name="username" autocomplete="username" required>
+        </label>
+        <label class="admin-modal-field">Password
+          <input name="password" type="password" autocomplete="current-password" required>
+        </label>
+        <p class="admin-modal-error" id="admin-modal-error" role="alert"></p>
+        <button class="btn btn-primary" type="submit">Sign in</button>
+      </form>
+    </div>
+  </div>
+
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/admin-entry.js"></script>
 </body>
 </html>

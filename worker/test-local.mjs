@@ -168,6 +168,22 @@ async function selfTest() {
   let text = await res.text();
   check("admin panel serves", res.status === 200 && text.includes('id="app"'), `${res.status}`);
 
+  res = await fetch(base + "/");
+  text = await res.text();
+  check(
+    "homepage admin entrance",
+    text.includes('id="admin-entry"') &&
+      text.includes('id="admin-modal"') &&
+      text.includes("admin-entry.js")
+  );
+
+  res = await fetch(base + "/assets/js/admin-entry.js");
+  check(
+    "admin entry script serves",
+    res.status === 200 && (res.headers.get("content-type") || "").includes("javascript"),
+    `${res.status}`
+  );
+
   res = await fetch(base + "/api/content");
   check("content API requires auth", res.status === 401, `${res.status}`);
 

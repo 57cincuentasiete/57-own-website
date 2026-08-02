@@ -387,3 +387,114 @@ a:hover { text-decoration: underline; }
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* ============ Admin entrance (homepage) ============ */
+.admin-entry {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-entry:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 24px;
+}
+
+.admin-modal[hidden] {
+  display: none;
+}
+
+.admin-modal-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  position: relative;
+  text-align: center;
+}
+
+.admin-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-modal-close:hover {
+  color: var(--text);
+}
+
+.admin-modal-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.admin-modal-card .muted {
+  margin-bottom: 16px;
+}
+
+.admin-modal form {
+  text-align: left;
+}
+
+.admin-modal-field {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.admin-modal-field input {
+  width: 100%;
+  margin-top: 6px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.admin-modal-field input:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.admin-modal .btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.admin-modal-error {
+  color: #b3261e;
+  min-height: 1.2em;
+  font-weight: 600;
+  margin-top: 10px;
+  text-align: center;
+}
