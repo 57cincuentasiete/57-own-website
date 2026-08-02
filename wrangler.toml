@@ -1,5 +1,14 @@
 name = "57fiftyseven"
 compatibility_date = "2026-08-02"
+main = "worker/index.js"
 
 [assets]
 directory = "."
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "CONTENT_KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+ADMIN_USER_HASH = "0ebeca049f88612b377e917bf3825ed792a34ad2d78469f4112f6b35dfe69d7d"

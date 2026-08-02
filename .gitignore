@@ -13,6 +13,7 @@ node_modules/
 # Secrets / local config
 .env
 .env.*
+.dev.vars
 *.pem
 *.key
 

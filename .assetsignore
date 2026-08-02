@@ -1,0 +1,8 @@
+# Files that must never be served as static assets.
+worker/
+_worker.js
+.dev.vars
+.dev.vars.example
+admin/.dev.vars
+package.json
+package-lock.json

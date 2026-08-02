@@ -1,0 +1,5 @@
+# Copy this file to .dev.vars (it is gitignored) and fill in real values
+# for local testing with: node worker/test-local.mjs
+ADMIN_USER_HASH=sha256-of-your-admin-name
+ADMIN_PASS_HASH=sha256-of-your-password
+ADMIN_SESSION_SECRET=any-long-random-string

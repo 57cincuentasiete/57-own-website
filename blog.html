@@ -11,7 +11,7 @@
 <body>
   <header class="site-header">
     <div class="container nav-wrap">
-      <a class="brand" href="index.html">57&rsquo;s own website</a>
+      <a class="brand" href="index.html"><!-- CMS:site.brand -->57&rsquo;s own website<!-- /CMS:site.brand --></a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
@@ -25,14 +25,14 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <h1>Blog</h1>
-        <p class="lead">Notes, ideas, and stories. New posts whenever I have something worth saying.</p>
+        <h1><!-- CMS:blog.hero.title -->Blog<!-- /CMS:blog.hero.title --></h1>
+        <p class="lead"><!-- CMS:blog.hero.lead -->Notes, ideas, and stories. New posts whenever I have something worth saying.<!-- /CMS:blog.hero.lead --></p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="post-list">
+        <!-- CMS:blog.list --><div class="post-list">
           <article class="card">
             <h2><a href="posts/welcome.html">Welcome to my new site</a></h2>
             <p class="card-meta">Aug 2, 2026 · 2 min read</p>
@@ -45,14 +45,14 @@
             <p class="card-meta">Coming soon</p>
             <p>Create a new file in <code>posts/</code>, copy the template from <code>posts/welcome.html</code>, and link it here.</p>
           </article>
-        </div>
+        </div><!-- /CMS:blog.list -->
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span id="year"></span> 57&rsquo;s own website. Built with care.</p>
+      <p><!-- CMS:site.footer.text -->&copy; <span id="year"></span> 57&rsquo;s own website. Built with care.<!-- /CMS:site.footer.text --></p>
     </div>
   </footer>
 

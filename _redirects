@@ -13,6 +13,10 @@
 /.agents/* /404.html 302
 /.cloudflareignore /404.html 302
 /.assetsignore /404.html 302
+/.dev.vars /404.html 302
+/_worker.js /404.html 302
+/worker/* /404.html 302
+/admin/.dev.vars /404.html 302
 
 # Convenience alias for security researchers.
 /security.txt /.well-known/security.txt 301
