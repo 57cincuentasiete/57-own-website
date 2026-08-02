@@ -193,7 +193,7 @@ async function selfTest() {
   res = await post("/api/login", { username: "57cincuentasiete", password: "Freedom.57" });
   const setCookie = res.headers.get("set-cookie") || "";
   check("login succeeds", res.status === 200 && setCookie.includes("cms_session="), `${res.status}`);
-  const cookie = setCookie.split(";")[0];
+  let cookie = setCookie.split(";")[0];
 
   res = await fetch(base + "/api/session", { headers: { Cookie: cookie } });
   check("session validates", res.status === 200 && (await res.json()).ok === true);
@@ -271,6 +271,38 @@ async function selfTest() {
 
   res = await fetch(base + "/api/content/home", { method: "DELETE", headers: { Cookie: cookie } });
   check("section restore works", res.status === 200, `${res.status}`);
+
+  // Password change flow
+  res = await fetch(base + "/api/password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: cookie },
+    body: JSON.stringify({ currentPassword: "wrong", newPassword: "NewPass123" }),
+  });
+  check("wrong current password rejected", res.status === 401, `${res.status}`);
+
+  res = await fetch(base + "/api/password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: cookie },
+    body: JSON.stringify({ currentPassword: "Freedom.57", newPassword: "short" }),
+  });
+  check("short new password rejected", res.status === 400, `${res.status}`);
+
+  res = await fetch(base + "/api/password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: cookie },
+    body: JSON.stringify({ currentPassword: "Freedom.57", newPassword: "NewPass123" }),
+  });
+  check("password change succeeds", res.status === 200, `${res.status}`);
+
+  res = await fetch(base + "/api/content", { headers: { Cookie: cookie } });
+  check("old session invalidated after change", res.status === 401, `${res.status}`);
+
+  res = await post("/api/login", { username: "57cincuentasiete", password: "Freedom.57" });
+  check("old password rejected after change", res.status === 401, `${res.status}`);
+
+  res = await post("/api/login", { username: "57cincuentasiete", password: "NewPass123" });
+  check("new password works", res.status === 200, `${res.status}`);
+  cookie = (res.headers.get("set-cookie") || "").split(";")[0];
 
   res = await fetch(base + "/api/logout", { method: "POST", headers: { Cookie: cookie } });
   check(

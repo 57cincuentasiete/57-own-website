@@ -156,10 +156,25 @@ async function isAuthed(request, env) {
   const payload = await verifyPayload(env.ADMIN_SESSION_SECRET, token);
   if (!payload || typeof payload.u !== "string") return false;
   const userHash = await sha256Hex(payload.u);
-  return safeEqualHex(userHash, env.ADMIN_USER_HASH || "");
+  if (!safeEqualHex(userHash, env.ADMIN_USER_HASH || "")) return false;
+  const record = await getAdminRecord(env);
+  const version = record && record.version ? Number(record.version) : 1;
+  return Number(payload.v) === version;
 }
 
 /* ---------- KV access ---------- */
+
+async function getAdminRecord(env) {
+  if (!env.CONTENT_KV) return null;
+  const raw = await env.CONTENT_KV.get("cms:admin");
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
 
 async function getSection(env, section) {
   if (!env.CONTENT_KV) return null;
@@ -229,13 +244,14 @@ async function handleLogin(request, env) {
 
   const userHash = await sha256Hex(username);
   const passHash = await sha256Hex(password);
-  if (
-    safeEqualHex(userHash, env.ADMIN_USER_HASH) &&
-    safeEqualHex(passHash, env.ADMIN_PASS_HASH)
-  ) {
+  const record = await getAdminRecord(env);
+  const expectedPassHash = (record && record.passHash) || env.ADMIN_PASS_HASH;
+  if (safeEqualHex(userHash, env.ADMIN_USER_HASH) && safeEqualHex(passHash, expectedPassHash)) {
     await env.CONTENT_KV.delete(lockKey);
+    const version = record && record.version ? Number(record.version) : 1;
     const payload = {
       u: username,
+      v: version,
       exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS,
     };
     const token = await signPayload(env.ADMIN_SESSION_SECRET, JSON.stringify(payload));
@@ -253,6 +269,36 @@ async function handleLogin(request, env) {
     { error: "INVALID_CREDENTIALS", message: "Incorrect name or password." },
     401
   );
+}
+
+async function handleChangePassword(request, env) {
+  let body;
+  try {
+    body = await readJson(request);
+  } catch {
+    return json({ error: "BAD_REQUEST", message: "Invalid request body." }, 400);
+  }
+  const currentPassword = String(body?.currentPassword || "");
+  const newPassword = String(body?.newPassword || "");
+  if (newPassword.length < 8) {
+    return json(
+      { error: "BAD_REQUEST", message: "New password must be at least 8 characters." },
+      400
+    );
+  }
+  const record = await getAdminRecord(env);
+  const currentHash = await sha256Hex(currentPassword);
+  const expectedHash = (record && record.passHash) || env.ADMIN_PASS_HASH || "";
+  if (!safeEqualHex(currentHash, expectedHash)) {
+    return json(
+      { error: "INVALID_CREDENTIALS", message: "Current password is incorrect." },
+      401
+    );
+  }
+  const nextHash = await sha256Hex(newPassword);
+  const version = (record && record.version ? Number(record.version) : 1) + 1;
+  await putSection(env, "admin", { passHash: nextHash, version });
+  return json({ ok: true });
 }
 
 async function handleGetContent(env) {
@@ -381,7 +427,9 @@ async function handleApi(request, env, url) {
 
   if (
     !env.CONTENT_KV &&
-    (pathname === "/api/content" || pathname.startsWith("/api/posts"))
+    (pathname === "/api/content" ||
+      pathname === "/api/password" ||
+      pathname.startsWith("/api/posts"))
   ) {
     return json(
       {
@@ -405,6 +453,9 @@ async function handleApi(request, env, url) {
   }
   if (pathname === "/api/posts" && method === "PUT") {
     return handlePutPost(request, env);
+  }
+  if (pathname === "/api/password" && method === "POST") {
+    return handleChangePassword(request, env);
   }
   const postMatch = pathname.match(/^\/api\/posts\/([^/]+)$/);
   if (postMatch && method === "DELETE") {

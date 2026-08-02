@@ -15,7 +15,7 @@
   };
 
   var SECTIONS = ["home", "profile", "blog", "site"];
-  var TABS = ["home", "profile", "blog", "site", "posts"];
+  var TABS = ["home", "profile", "blog", "site", "posts", "security"];
 
   /* ---------- helpers ---------- */
 
@@ -263,6 +263,28 @@
     );
   }
 
+  function renderSecurity() {
+    return (
+      '<section class="admin-card">' +
+      '<div class="admin-card-head">' +
+      "<h2>Change password</h2>" +
+      "</div>" +
+      '<form data-form="password">' +
+      '<label class="admin-field"><span class="admin-field-label">Current password</span>' +
+      '<input type="password" name="current" autocomplete="current-password" required></label>' +
+      '<label class="admin-field"><span class="admin-field-label">New password (at least 8 characters)</span>' +
+      '<input type="password" name="next" autocomplete="new-password" minlength="8" required></label>' +
+      '<label class="admin-field"><span class="admin-field-label">Confirm new password</span>' +
+      '<input type="password" name="confirm" autocomplete="new-password" minlength="8" required></label>' +
+      '<p class="admin-hint">After saving, you will be signed out and must sign in with the new password.</p>' +
+      '<div class="admin-form-actions">' +
+      '<button type="submit" class="btn btn-primary">Change password</button>' +
+      "</div>" +
+      "</form>" +
+      "</section>"
+    );
+  }
+
   function render() {
     if (!state.authed) {
       app.innerHTML =
@@ -289,7 +311,14 @@
     var tabsHtml =
       '<nav class="admin-tabs" aria-label="Admin sections">' +
       TABS.map(function (t) {
-        var label = { home: "Home", profile: "Profile", blog: "Blog", site: "Site", posts: "Posts" }[t];
+        var label = {
+          home: "Home",
+          profile: "Profile",
+          blog: "Blog",
+          site: "Site",
+          posts: "Posts",
+          security: "Security"
+        }[t];
         return (
           '<button type="button" class="admin-tab" role="tab" aria-selected="' +
           (state.tab === t ? "true" : "false") +
@@ -301,7 +330,11 @@
     var mainHtml =
       '<main class="admin-main">' +
       noticeHtml +
-      (state.tab === "posts" ? renderPosts() : renderSectionForm(state.tab)) +
+      (state.tab === "posts"
+        ? renderPosts()
+        : state.tab === "security"
+          ? renderSecurity()
+          : renderSectionForm(state.tab)) +
       "</main>";
 
     app.innerHTML =
@@ -380,6 +413,34 @@
     }
   }
 
+  async function handlePasswordSubmit(form) {
+    var current = form.current.value;
+    var next = form.next.value;
+    var confirm = form.confirm.value;
+    if (next.length < 8) {
+      showNotice("err", "New password must be at least 8 characters.", false);
+      return;
+    }
+    if (next !== confirm) {
+      showNotice("err", "Passwords do not match.", false);
+      return;
+    }
+    try {
+      await api("/api/password", {
+        method: "POST",
+        body: JSON.stringify({ currentPassword: current, newPassword: next })
+      });
+      await api("/api/logout", { method: "POST" }).catch(function () {});
+      state.authed = false;
+      state.values = null;
+      state.schema = null;
+      state.loginError = "Password changed. Sign in with your new password.";
+      render();
+    } catch (e) {
+      showNotice("err", e.message || "Password change failed.", false);
+    }
+  }
+
   async function handleResetSection(section) {
     if (!window.confirm("Restore this section to its default content? Your saved changes will be removed.")) return;
     try {
@@ -412,6 +473,7 @@
     if (kind === "login") handleLogin(form);
     if (kind === "section") handleSectionSubmit(form);
     if (kind === "post") handlePostSubmit(form);
+    if (kind === "password") handlePasswordSubmit(form);
   });
 
   app.addEventListener("click", function (event) {

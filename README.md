@@ -14,6 +14,10 @@ From the panel you can edit the Home page, Profile page, Blog intro, site-wide
 text (header brand, footer), and create/edit/delete blog posts. Published
 changes appear on the live site immediately — no redeploy needed.
 
+The **Security** tab lets you change your password at any time (at least 8
+characters). After changing it you are signed out and old sessions are
+invalidated immediately.
+
 The password is never stored in plain text. The Worker compares SHA-256 hashes
 and signs session cookies with a secret.
 
@@ -93,6 +97,11 @@ in that output directory instead of the repo root.
 
 - Admin credentials are stored only as SHA-256 hashes; the password hash and
   session secret are Cloudflare secrets, not in the repo.
+- A password changed from the Security tab is stored in KV (hashed) and takes
+  over from the `ADMIN_PASS_HASH` environment variable. To reset a forgotten
+  panel password, delete the `cms:admin` key in the `CONTENT_KV` namespace —
+  the original `ADMIN_PASS_HASH` password becomes valid again — or update the
+  environment variable and delete the key.
 - Sessions use an HttpOnly, Secure, SameSite=Strict cookie that expires after
   7 days. Logout clears it.
 - Login attempts are rate-limited per IP.
