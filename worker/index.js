@@ -480,8 +480,16 @@ function replaceMarker(html, marker, content) {
 function renderField(value, field) {
   if (field.type === "html") return String(value);
   if (field.type === "link") {
-    const href = field.mailto ? `mailto:${value}` : String(value);
-    const label = field.mailto ? value : field.linkLabel || value;
+    const raw = String(value).trim();
+    let href = raw;
+    if (raw && raw !== "#") {
+      if (field.mailto) {
+        if (!/^mailto:/i.test(raw)) href = `mailto:${raw}`;
+      } else if (!/^[a-z][a-z0-9+.-]*:/i.test(raw)) {
+        href = `https://${raw}`;
+      }
+    }
+    const label = field.mailto ? raw : field.linkLabel || raw;
     return `<a href="${escapeAttr(href)}">${escapeHtml(label)}</a>`;
   }
   const text = escapeHtml(value);

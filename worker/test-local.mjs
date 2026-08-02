@@ -219,6 +219,25 @@ async function selfTest() {
   text = await res.text();
   check("profile injection", stripComments(text).includes("<h2>57</h2>"));
 
+  await put(
+    "/api/content",
+    {
+      section: "profile",
+      values: {
+        "links.github": "github.com/57cincuentasiete",
+        "links.email": "57cincuentasiete@gmail.com",
+      },
+    },
+    cookie
+  );
+  res = await fetch(base + "/profile.html");
+  text = await res.text();
+  check(
+    "link normalization",
+    text.includes('href="https://github.com/57cincuentasiete"') &&
+      text.includes('href="mailto:57cincuentasiete@gmail.com"')
+  );
+
   await put("/api/content", { section: "site", values: { brand: "57 Brand" } }, cookie);
   res = await fetch(base + "/blog.html");
   text = await res.text();

@@ -142,7 +142,8 @@
         "</textarea>";
     } else if (field.type === "link") {
       control =
-        '<input data-key="' + escapeAttr(field.key) + '" type="url" value="' +
+        '<input data-key="' + escapeAttr(field.key) + '" type="text" inputmode="' +
+        (field.mailto ? "email" : "url") + '" value="' +
         escapeAttr(v) +
         '" placeholder="' +
         (field.mailto ? "you@example.com" : "https://...") +
@@ -171,7 +172,7 @@
       '<button type="button" class="btn btn-outline admin-btn-sm" data-action="reset-section" data-section="' +
       escapeAttr(section) + '">Restore defaults</button>' +
       "</div>" +
-      '<form data-form="section" data-section="' + escapeAttr(section) + '">' +
+      '<form data-form="section" data-section="' + escapeAttr(section) + '" novalidate>' +
       meta.fields.map(function (f) { return fieldHtml(f, values[f.key]); }).join("") +
       '<div class="admin-form-actions">' +
       '<button type="submit" class="btn btn-primary">Save ' + escapeHtml(meta.label) + "</button>" +
@@ -190,7 +191,7 @@
       "<h3>" + (existing ? "Edit post" : "New post") + "</h3>" +
       '<button type="button" class="btn btn-outline admin-btn-sm" data-action="cancel-post">Back to list</button>' +
       "</div>" +
-      '<form data-form="post">' +
+      '<form data-form="post" novalidate>' +
       '<label class="admin-field"><span class="admin-field-label">Slug (URL)</span>' +
       '<input name="slug" value="' + escapeAttr(draft.slug) + '" ' + (existing ? "readonly" : "") + ' placeholder="my-first-post"></label>' +
       '<label class="admin-field"><span class="admin-field-label">Title</span>' +
@@ -391,6 +392,10 @@
     var slug = form.slug.value.trim().toLowerCase().replace(/[^a-z0-9-_]+/g, "-").replace(/^-+|-+$/g, "");
     if (!slug) {
       showNotice("err", "Please enter a slug (letters, numbers, dashes).");
+      return;
+    }
+    if (!form.title.value.trim()) {
+      showNotice("err", "Please enter a title.", false);
       return;
     }
     var post = {
