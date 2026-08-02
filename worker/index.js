@@ -609,6 +609,14 @@ export default {
       return new Response("Not found", { status: 404 });
     }
 
+    // The panel is hidden: /admin returns 404 unless the visitor has a valid
+    // session. The homepage Admin button signs in first, then opens /admin/.
+    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+      if (!(await isAuthed(request, env))) {
+        return new Response("Not found", { status: 404 });
+      }
+    }
+
     const posts = await getSection(env, "posts");
     const postMatch = pathname.match(/^\/posts\/([^/]+)\.html$/);
     if (postMatch && posts && posts[postMatch[1]]?.published !== false) {

@@ -165,9 +165,9 @@ async function selfTest() {
     fetch(base + pathname, { method: "DELETE", headers: cookie ? { Cookie: cookie } : {} });
 
   let res = await fetch(base + "/admin/");
-  let text = await res.text();
-  check("admin panel serves", res.status === 200 && text.includes('id="app"'), `${res.status}`);
+  check("admin panel hidden without session", res.status === 404, `${res.status}`);
 
+  let text;
   res = await fetch(base + "/");
   text = await res.text();
   check(
@@ -197,6 +197,10 @@ async function selfTest() {
 
   res = await fetch(base + "/api/session", { headers: { Cookie: cookie } });
   check("session validates", res.status === 200 && (await res.json()).ok === true);
+
+  res = await fetch(base + "/admin/", { headers: { Cookie: cookie } });
+  text = await res.text();
+  check("admin panel serves when signed in", res.status === 200 && text.includes('id="app"'), `${res.status}`);
 
   res = await fetch(base + "/api/content", { headers: { Cookie: cookie } });
   const content = await res.json();

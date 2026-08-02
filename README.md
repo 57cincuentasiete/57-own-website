@@ -5,7 +5,9 @@ content from the browser.
 
 ## Admin panel
 
-Open `https://<your-site>/admin/` and sign in with:
+The panel URL is hidden: visiting `/admin/` returns a 404 unless you are
+already signed in. To get in, click the **🔒 Admin** button on the homepage,
+sign in, and you will be taken to the panel. Sign in with:
 
 - Name: `57cincuentasiete`
 - Password: `Freedom.57`
