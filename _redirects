@@ -1,4 +1,18 @@
-/setup-git.ps1 /404.html 404
-/wrangler.toml /404.html 404
-/.gitignore /404.html 404
-/.git/* /404.html 404
+# Never serve setup/internal files, even if a stale or cached copy exists.
+/setup-git.ps1 /404.html 302
+/wrangler.toml /404.html 302
+/.gitignore /404.html 302
+/README.md /404.html 302
+/SECURITY.md /404.html 302
+/browser_docs.txt /404.html 302
+/.git /404.html 302
+/.git/* /404.html 302
+/.github /404.html 302
+/.github/* /404.html 302
+/.codex/* /404.html 302
+/.agents/* /404.html 302
+/.cloudflareignore /404.html 302
+/.assetsignore /404.html 302
+
+# Convenience alias for security researchers.
+/security.txt /.well-known/security.txt 301
