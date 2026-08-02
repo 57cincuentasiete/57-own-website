@@ -16,6 +16,10 @@ From the panel you can edit the Home page, Profile page, Blog intro, site-wide
 text (header brand, footer), and create/edit/delete blog posts. Published
 changes appear on the live site immediately — no redeploy needed.
 
+Each saved post automatically gets its own page at `/posts/<slug>.html`,
+built from the site template. In the panel's Posts tab you can **View** that
+page or **Download HTML** to save the generated `.html` file.
+
 The **Security** tab lets you change your password at any time (at least 8
 characters). After changing it you are signed out and old sessions are
 invalidated immediately.

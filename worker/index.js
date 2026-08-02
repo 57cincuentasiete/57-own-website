@@ -402,6 +402,29 @@ async function handleDeletePost(env, slug) {
   return json({ ok: true });
 }
 
+async function handleGetPostHtml(env, slug) {
+  const posts = await getSection(env, "posts");
+  const post = posts && posts[slug];
+  if (!post) return json({ error: "NOT_FOUND" }, 404);
+
+  const templateUrl = new URL("/posts/welcome.html", "https://local.test");
+  const templateResponse = await env.ASSETS.fetch(new Request(templateUrl));
+  if (!templateResponse.ok) {
+    return json({ error: "TEMPLATE_MISSING", message: "Post template not found." }, 500);
+  }
+  const templateHtml = await templateResponse.text();
+  let out = renderPostPage(templateHtml, post);
+  out = await applyCms(out, env);
+  return new Response(out, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Disposition": `attachment; filename="${slug}.html"`,
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 async function handleApi(request, env, url) {
   const { pathname } = url;
   const method = request.method;
@@ -460,6 +483,10 @@ async function handleApi(request, env, url) {
   const postMatch = pathname.match(/^\/api\/posts\/([^/]+)$/);
   if (postMatch && method === "DELETE") {
     return handleDeletePost(env, decodeURIComponent(postMatch[1]));
+  }
+  const postHtmlMatch = pathname.match(/^\/api\/posts\/([^/]+)\/html$/);
+  if (postHtmlMatch && method === "GET") {
+    return handleGetPostHtml(env, decodeURIComponent(postHtmlMatch[1]));
   }
 
   return json({ error: "NOT_FOUND" }, 404);

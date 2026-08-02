@@ -241,6 +241,8 @@
                 (p.published === false ? " \u00b7 draft" : "") + "</span>" +
                 "</div>" +
                 '<div class="admin-post-actions">' +
+                '<a class="btn btn-outline admin-btn-sm" href="/posts/' + encodeURIComponent(p.slug) + '.html" target="_blank" rel="noopener">View</a>' +
+                '<a class="btn btn-outline admin-btn-sm" href="/api/posts/' + encodeURIComponent(p.slug) + '/html" download>Download HTML</a>' +
                 '<button type="button" class="btn btn-outline admin-btn-sm" data-action="edit-post" data-slug="' + escapeAttr(slug) + '">Edit</button>' +
                 '<button type="button" class="btn btn-outline admin-btn-sm admin-danger" data-action="delete-post" data-slug="' + escapeAttr(slug) + '">Delete</button>' +
                 "</div>" +

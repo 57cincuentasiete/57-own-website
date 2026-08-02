@@ -277,6 +277,20 @@ async function selfTest() {
     `${res.status}`
   );
 
+  res = await fetch(base + "/api/posts/hello-world/html", { headers: { Cookie: cookie } });
+  text = await res.text();
+  check(
+    "post HTML downloadable",
+    res.status === 200 &&
+      (res.headers.get("content-disposition") || "").includes("attachment") &&
+      text.includes("<h1>Hello World</h1>") &&
+      text.includes("<p>Hello!</p>"),
+    `${res.status}`
+  );
+
+  res = await fetch(base + "/api/posts/hello-world/html");
+  check("post HTML requires auth", res.status === 401, `${res.status}`);
+
   await put(
     "/api/posts",
     { slug: "draft-post", post: { slug: "draft-post", title: "Draft Post", date: "", excerpt: "", body: "", published: false } },
