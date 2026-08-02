@@ -1,0 +1,4 @@
+/setup-git.ps1 /404.html 404
+/wrangler.toml /404.html 404
+/.gitignore /404.html 404
+/.git/* /404.html 404
