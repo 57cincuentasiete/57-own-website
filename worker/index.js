@@ -700,7 +700,7 @@ export default {
     // time so panel fixes arrive immediately after deploy.
     if (pathname.startsWith("/admin/") && !contentType.includes("text/html")) {
       const headers = new Headers(assetResponse.headers);
-      headers.set("Cache-Control", "no-cache, must-revalidate");
+      headers.set("Cache-Control", "no-store");
       return new Response(assetResponse.body, { status: assetResponse.status, headers });
     }
 
@@ -710,7 +710,7 @@ export default {
     const out = await applyCms(html, env);
     const response = await toHtmlResponse(assetResponse, out);
     if (pathname.startsWith("/admin/")) {
-      response.headers.set("Cache-Control", "no-cache, must-revalidate");
+      response.headers.set("Cache-Control", "no-store");
     }
     return response;
   },
