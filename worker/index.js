@@ -622,6 +622,21 @@ async function toHtmlResponse(assetResponse, html) {
   return new Response(html, { status: 200, headers });
 }
 
+async function fetchAssetFollowRedirects(env, request) {
+  let response = await env.ASSETS.fetch(request);
+  let hops = 0;
+  while (
+    [301, 302, 303, 307, 308].includes(response.status) &&
+    response.headers.get("location") &&
+    hops < 5
+  ) {
+    const location = new URL(response.headers.get("location"), request.url);
+    response = await env.ASSETS.fetch(new Request(location, request));
+    hops += 1;
+  }
+  return response;
+}
+
 /* ---------- fetch handler ---------- */
 
 export default {
@@ -645,12 +660,13 @@ export default {
     }
 
     const posts = await getSection(env, "posts");
-    const postMatch = pathname.match(/^\/posts\/([^/]+)\.html$/);
+    const postMatch = pathname.match(/^\/posts\/([^/]+?)(?:\.html)?$/);
     if (postMatch && posts && posts[postMatch[1]]?.published !== false) {
       const slug = decodeURIComponent(postMatch[1]);
       if (posts[slug]) {
         const templateUrl = new URL("/posts/welcome.html", url);
-        const templateResponse = await env.ASSETS.fetch(
+        const templateResponse = await fetchAssetFollowRedirects(
+          env,
           new Request(templateUrl, request)
         );
         if (templateResponse.ok) {

@@ -149,6 +149,71 @@ async function selfTest() {
     noKvEnv
   );
   check("login reports not configured without KV", noKvRes.status === 503);
+
+  // Workers Assets redirects .html paths (e.g. /posts/welcome.html -> /posts/welcome).
+  // The post renderer must follow that redirect when loading its template.
+  const redirectEnv = {
+    ASSETS: {
+      async fetch(request) {
+        const url = new URL(request.url);
+        if (url.pathname === "/posts/welcome.html") {
+          return new Response(null, {
+            status: 308,
+            headers: { Location: "/posts/welcome" },
+          });
+        }
+        if (url.pathname === "/posts/welcome") {
+          return new Response(
+            "<!DOCTYPE html><title>tpl</title><!-- CMS:post.title --><h1>x</h1><!-- /CMS:post.title --><!-- CMS:post.body --><p>x</p><!-- /CMS:post.body -->",
+            { status: 200, headers: { "Content-Type": "text/html" } }
+          );
+        }
+        return new Response("Not found", { status: 404 });
+      },
+    },
+    CONTENT_KV: {
+      async get(key) {
+        if (key === "cms:posts") {
+          return JSON.stringify({
+            slug1: {
+              slug: "slug1",
+              title: "Redirect Post",
+              date: "",
+              readMinutes: "",
+              excerpt: "",
+              body: "<p>ok</p>",
+              published: true,
+            },
+          });
+        }
+        return null;
+      },
+      async put() {},
+      async delete() {},
+    },
+    ADMIN_USER_HASH: "x",
+    ADMIN_PASS_HASH: "x",
+    ADMIN_SESSION_SECRET: "x",
+  };
+  let redirectRes = await worker.fetch(
+    new Request("http://x/posts/slug1.html"),
+    redirectEnv
+  );
+  let redirectText = await redirectRes.text();
+  check(
+    "post template redirect followed (.html)",
+    redirectRes.status === 200 &&
+      redirectText.includes("Redirect Post") &&
+      redirectText.includes("<p>ok</p>"),
+    `${redirectRes.status}`
+  );
+  redirectRes = await worker.fetch(new Request("http://x/posts/slug1"), redirectEnv);
+  redirectText = await redirectRes.text();
+  check(
+    "post page serves without .html",
+    redirectRes.status === 200 && redirectText.includes("Redirect Post"),
+    `${redirectRes.status}`
+  );
   const post = (pathname, body, cookie) =>
     fetch(base + pathname, {
       method: "POST",
@@ -274,6 +339,14 @@ async function selfTest() {
   check(
     "post page renders",
     res.status === 200 && text.includes("<h1>Hello World</h1>") && text.includes("<p>Hello!</p>"),
+    `${res.status}`
+  );
+
+  res = await fetch(base + "/posts/hello-world");
+  text = await res.text();
+  check(
+    "post page serves without .html",
+    res.status === 200 && text.includes("<h1>Hello World</h1>"),
     `${res.status}`
   );
 
