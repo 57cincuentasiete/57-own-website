@@ -193,7 +193,8 @@
       "</div>" +
       '<form data-form="post" novalidate>' +
       '<label class="admin-field"><span class="admin-field-label">Slug (URL)</span>' +
-      '<input name="slug" value="' + escapeAttr(draft.slug) + '" ' + (existing ? "readonly" : "") + ' placeholder="my-first-post"></label>' +
+      '<input name="slug" value="' + escapeAttr(draft.slug) + '" readonly placeholder="auto-generated">' +
+      '<p class="admin-hint">Auto-generated from the posting time. Page URL: /posts/' + escapeHtml(draft.slug) + '</p></label>' +
       '<label class="admin-field"><span class="admin-field-label">Title</span>' +
       '<input name="title" value="' + escapeAttr(draft.title) + '" required></label>' +
       '<label class="admin-field"><span class="admin-field-label">Date</span>' +
@@ -448,6 +449,28 @@
     }
   }
 
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function timestampSlug() {
+    var d = new Date();
+    return (
+      d.getFullYear() +
+      "-" + pad2(d.getMonth() + 1) +
+      "-" + pad2(d.getDate()) +
+      "-" + pad2(d.getHours()) +
+      pad2(d.getMinutes()) +
+      pad2(d.getSeconds())
+    );
+  }
+
+  function todayLabel() {
+    var d = new Date();
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  }
+
   async function handleResetSection(section) {
     if (!window.confirm("Restore this section to its default content? Your saved changes will be removed.")) return;
     try {
@@ -504,7 +527,15 @@
       handleResetSection(btn.getAttribute("data-section"));
     } else if (action === "new-post") {
       state.editingPost = "__new__";
-      state.postDraft = { slug: "", title: "", date: "", readMinutes: "", excerpt: "", body: "", published: true };
+      state.postDraft = {
+        slug: timestampSlug(),
+        title: "",
+        date: todayLabel(),
+        readMinutes: "",
+        excerpt: "",
+        body: "",
+        published: true
+      };
       render();
     } else if (action === "edit-post") {
       var slug = btn.getAttribute("data-slug");

@@ -17,8 +17,10 @@ text (header brand, footer), and create/edit/delete blog posts. Published
 changes appear on the live site immediately — no redeploy needed.
 
 Each saved post automatically gets its own page at `/posts/<slug>.html`,
-built from the site template. In the panel's Posts tab you can **View** that
-page or **Download HTML** to save the generated `.html` file.
+built from the site template. The URL is generated automatically from the
+posting time (for example `/posts/2026-08-03-172512.html`); the clean URL
+without `.html` works too. In the panel's Posts tab you can **View** that page
+or **Download HTML** to save the generated `.html` file.
 
 The **Security** tab lets you change your password at any time (at least 8
 characters). After changing it you are signed out and old sessions are

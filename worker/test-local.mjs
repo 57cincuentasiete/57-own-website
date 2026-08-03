@@ -364,6 +364,30 @@ async function selfTest() {
   res = await fetch(base + "/api/posts/hello-world/html");
   check("post HTML requires auth", res.status === 401, `${res.status}`);
 
+  res = await put(
+    "/api/posts",
+    {
+      post: {
+        title: "Auto Slug Post",
+        date: "",
+        readMinutes: "",
+        excerpt: "",
+        body: "",
+        published: true,
+      },
+    },
+    cookie
+  );
+  const autoData = await res.json();
+  check(
+    "post slug auto-generated from time",
+    res.status === 200 && /^\d{4}-\d{2}-\d{2}-\d{6}$/.test(autoData.slug || ""),
+    (autoData && autoData.slug) || `${res.status}`
+  );
+  if (autoData && autoData.slug) {
+    await del("/api/posts/" + autoData.slug, cookie);
+  }
+
   await put(
     "/api/posts",
     { slug: "draft-post", post: { slug: "draft-post", title: "Draft Post", date: "", excerpt: "", body: "", published: false } },

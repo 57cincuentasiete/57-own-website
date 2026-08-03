@@ -370,11 +370,16 @@ async function handlePutPost(request, env) {
   } catch {
     return json({ error: "BAD_REQUEST", message: "Invalid request body." }, 400);
   }
-  const slug = cleanSlug(body?.slug);
+  let slug = cleanSlug(body?.slug);
   const post = body?.post;
-  if (!slug || !post || typeof post !== "object") {
+  if (!slug) {
+    const d = new Date();
+    const p = (n) => String(n).padStart(2, "0");
+    slug = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+  }
+  if (!post || typeof post !== "object") {
     return json(
-      { error: "BAD_REQUEST", message: "A slug and post object are required." },
+      { error: "BAD_REQUEST", message: "A post object is required." },
       400
     );
   }
