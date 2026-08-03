@@ -39,6 +39,24 @@
     if (event.key === "Escape" && !modal.hidden) closeModal();
   });
 
+  // Visiting /admin without a session redirects here with ?admin=1 so the
+  // same sign-in popup appears without the visitor having to click the
+  // Admin button themselves.
+  var params = new URLSearchParams(window.location.search);
+  if (params.get("admin") === "1") {
+    params.delete("admin");
+    var cleanUrl =
+      window.location.pathname +
+      (params.toString() ? "?" + params.toString() : "") +
+      window.location.hash;
+    try {
+      window.history.replaceState(null, "", cleanUrl);
+    } catch (e) {
+      /* older browsers may refuse history.replaceState; the modal still opens */
+    }
+    openModal();
+  }
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     errorEl.textContent = "Signing in\u2026";

@@ -1,5 +1,8 @@
 # Never serve setup/internal files, even if a stale or cached copy exists.
 /setup-git.ps1 /404.html 302
+/setup-local-https.ps1 /404.html 302
+/certs /404.html 302
+/certs/* /404.html 302
 /wrangler.toml /404.html 302
 /.gitignore /404.html 302
 /README.md /404.html 302

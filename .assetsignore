@@ -1,6 +1,8 @@
 # Files that must never be served as static assets.
 worker/
 _worker.js
+certs/
+setup-local-https.ps1
 .dev.vars
 .dev.vars.example
 admin/.dev.vars

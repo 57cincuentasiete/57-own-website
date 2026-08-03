@@ -656,9 +656,18 @@ export default {
       return new Response("Not found", { status: 404 });
     }
 
-    // The panel is hidden: /admin returns 404 unless the visitor has a valid
-    // session. The homepage Admin button signs in first, then opens /admin/.
-    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    // The panel is hidden. Guests who type /admin (or /admin/) are sent to
+    // the homepage with the sign-in modal open, exactly like clicking the
+    // homepage Admin button. Other /admin/* files stay hidden without a
+    // valid session.
+    if (pathname === "/admin" || pathname === "/admin/") {
+      if (!(await isAuthed(request, env))) {
+        const loginUrl = new URL("/", url);
+        loginUrl.searchParams.set("admin", "1");
+        return Response.redirect(loginUrl.toString(), 302);
+      }
+    }
+    if (pathname.startsWith("/admin/")) {
       if (!(await isAuthed(request, env))) {
         return new Response("Not found", { status: 404 });
       }

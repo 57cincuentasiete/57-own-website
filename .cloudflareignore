@@ -8,6 +8,7 @@
 node_modules/
 
 setup-git.ps1
+setup-local-https.ps1
 README.md
 SECURITY.md
 browser_docs.txt
@@ -17,5 +18,6 @@ browser_docs.txt
 .assetsignore
 
 *.log
+certs/
 Thumbs.db
 .DS_Store
