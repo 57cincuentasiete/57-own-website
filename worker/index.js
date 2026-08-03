@@ -695,10 +695,23 @@ export default {
     const assetResponse = await env.ASSETS.fetch(request);
     if (!assetResponse.ok) return assetResponse;
     const contentType = assetResponse.headers.get("content-type") || "";
+
+    // The admin panel must never be stale: browsers should revalidate every
+    // time so panel fixes arrive immediately after deploy.
+    if (pathname.startsWith("/admin/") && !contentType.includes("text/html")) {
+      const headers = new Headers(assetResponse.headers);
+      headers.set("Cache-Control", "no-cache, must-revalidate");
+      return new Response(assetResponse.body, { status: assetResponse.status, headers });
+    }
+
     if (!contentType.includes("text/html")) return assetResponse;
 
     const html = await assetResponse.text();
     const out = await applyCms(html, env);
-    return toHtmlResponse(assetResponse, out);
+    const response = await toHtmlResponse(assetResponse, out);
+    if (pathname.startsWith("/admin/")) {
+      response.headers.set("Cache-Control", "no-cache, must-revalidate");
+    }
+    return response;
   },
 };

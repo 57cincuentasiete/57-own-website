@@ -311,6 +311,14 @@ async function selfTest() {
   res = await fetch(base + "/admin/", { headers: { Cookie: cookie } });
   text = await res.text();
   check("admin panel serves when signed in", res.status === 200 && text.includes('id="app"'), `${res.status}`);
+  check("admin assets versioned", text.includes("admin.js?v=") && text.includes("admin.css?v="));
+
+  res = await fetch(base + "/admin/admin.js", { headers: { Cookie: cookie } });
+  check(
+    "admin assets never cached",
+    (res.headers.get("cache-control") || "").includes("no-cache"),
+    res.headers.get("cache-control") || "(none)"
+  );
 
   res = await fetch(base + "/api/content", { headers: { Cookie: cookie } });
   const content = await res.json();
