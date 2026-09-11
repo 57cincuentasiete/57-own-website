@@ -20,3 +20,6 @@ certs/
 
 # Logs
 *.log
+
+# Local vocabulary accounts and encryption key
+worker/.local-vocabulary/

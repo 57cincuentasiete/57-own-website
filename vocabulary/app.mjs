@@ -3,10 +3,20 @@ const $=id=>document.getElementById(id);
 const words=await fetch('/vocabulary/words.json').then(r=>{if(!r.ok)throw Error('Unable to load word library');return r.json()});
 const byId=new Map(words.map(w=>[w.id,w]));
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let db,state;
-function change(fn) {return new Promise((resolve,reject)=>{const tx=db.transaction('study','readwrite'),store=tx.objectStore('study'),request=store.get('state');let result;request.onsuccess=()=>{try{result=request.result||initial();fn(result);store.put(result,'state')}catch(e){reject(e);tx.abort()}};tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error('Progress could not be saved'));});}
-function fail(e){$('notice').textContent=e.message||'Unable to save progress. Please reopen this page.';}
-async function update(fn=()=>{}){try{state=await change(s=>{fn(s);next(s,words)});render()}catch(e){fail(e)}}
+let state,revision,accountId,busy=false;
+async function api(action,method='GET',data){const r=await fetch('/api/vocabulary/'+action,{method,credentials:'same-origin',headers:{'Content-Type':'application/json'},...(data?{body:JSON.stringify(data)}:{})});const result=await r.json();if(!r.ok){if(r.status===401)showAuth();throw Error(result.error||'Request failed')}return result}
+function showAuth(){state=null;revision=null;accountId=null;$('account').hidden=true;$('study-area').hidden=true;$('auth').hidden=false;$('prompt').replaceChildren();$('account-name').textContent='';}
+async function change(fn){const result=structuredClone(state);fn(result);const saved=await api('progress','PUT',{state:result,revision,accountId});revision=saved.revision;return result}
+function fail(e){$('notice').textContent=e.message;$('auth-notice').textContent=e.message;}
+async function update(fn=()=>{}){if(!state||busy)return;busy=true;try{state=await change(s=>{fn(s);next(s,words)});render()}catch(e){fail(e)}finally{busy=false}}
+async function loadAccount(){const result=await api('progress');accountId=result.accountId;state=result.state||initial();revision=result.revision;$('account-name').textContent=result.nickname;$('auth').hidden=true;$('account').hidden=false;$('study-area').hidden=false;await update()}
+let registering=true;
+try{registering=!localStorage.getItem('57-vocabulary-returning')}catch{}
+function authMode(){$('auth-title').textContent=registering?'Create your account':'Welcome back';$('auth-submit').textContent=registering?'Register and start learning':'Log in';$('auth-toggle').textContent=registering?'Already registered? Log in':'New here? Register';$('password').autocomplete=registering?'new-password':'current-password';$('confirm-label').hidden=!registering;$('confirm').required=registering;$('auth-notice').textContent='';}
+$('auth-toggle').onclick=()=>{registering=!registering;authMode()};
+$('auth-form').onsubmit=async e=>{e.preventDefault();if(registering&&$('password').value!==$('confirm').value){$('auth-notice').textContent='Passwords do not match.';return}$('auth-submit').disabled=true;try{await api(registering?'register':'login','POST',{nickname:$('nickname').value,password:$('password').value});try{localStorage.setItem('57-vocabulary-returning','1')}catch{}$('auth-form').reset();await loadAccount()}catch(e){fail(e)}finally{$('auth-submit').disabled=false}};
+$('logout').onclick=async()=>{if(busy)return;busy=true;try{await api('logout','POST',{});showAuth();registering=false;authMode()}catch(e){fail(e)}finally{busy=false}};
+authMode();
 function render(){
  const now=new Date(),u=usage(state,now),p=u.pending,w=p&&byId.get(p.id);
  $('count').innerHTML=`${u.admitted.length} <small>/ ${state.settings.maximum} words</small>`;
@@ -29,5 +39,5 @@ function render(){
 function library(){const q=$('search').value.toLowerCase();const found=words.filter(w=>[w.word,w.meaning,w.topic].some(v=>v.toLowerCase().includes(q)));$('words').innerHTML=found.length?found.map(w=>`<details><summary>${escape(w.word)}</summary><p>${escape(w.topic)}</p><p>${escape(w.meaning)}</p><p>${escape(w.collocation)}</p><p>“${escape(w.example)}”</p></details>`).join(''):'<p>No matching words. Try a different search.</p>';}
 $('total').textContent=`/ ${words.length} entries`;$('search').oninput=library;library();
 $('settings').onsubmit=e=>{e.preventDefault();const maximum=Number($('maximum').value),newMaximum=Number($('newMaximum').value);if(![maximum,newMaximum].every(v=>Number.isInteger(v)&&v>=0&&v<=500))return;update(s=>{s.settings.maximum=maximum;s.settings.newMaximum=newMaximum;$('notice').textContent='Daily limits saved.'})};
-$('export').onclick=async()=>{try{const s=await change(()=>{}),url=URL.createObjectURL(new Blob([JSON.stringify(s,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='57-vocabulary-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(e){fail(e)}};
-try{db=await new Promise((resolve,reject)=>{const r=indexedDB.open('57-vocabulary',1);r.onupgradeneeded=()=>r.result.createObjectStore('study');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});await update();setInterval(()=>{if(document.visibilityState==='visible')update()},60000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')update()})}catch(e){$('prompt').textContent='Browser storage is unavailable. Enable site storage to study and save your progress.';fail(e)}
+$('export').onclick=()=>{if(!state)return;const url=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='57-vocabulary-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+try{await loadAccount()}catch(e){showAuth();if(e.message!=='Please log in.')fail(e)}

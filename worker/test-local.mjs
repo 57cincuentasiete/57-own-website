@@ -12,6 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import worker from "./index.js";
+import { localDatabase } from './vocabulary-local.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -82,8 +83,14 @@ function tlsOptions() {
 
 const devVars = loadDevVars();
 const store = new Map();
+const vocabularyDir = path.join(ROOT,'worker','.local-vocabulary');
+fs.mkdirSync(vocabularyDir,{recursive:true});
+const vocabularyKeyFile = path.join(vocabularyDir,'key');
+if(!fs.existsSync(vocabularyKeyFile))fs.writeFileSync(vocabularyKeyFile,Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('base64'),{flag:'wx'});
 
 const env = {
+  VOCAB_DB: localDatabase(path.join(vocabularyDir,'accounts.sqlite')),
+  VOCAB_ENCRYPTION_KEY: devVars.VOCAB_ENCRYPTION_KEY || fs.readFileSync(vocabularyKeyFile,'utf8').trim(),
   ASSETS: {
     async fetch(request) {
       const url = new URL(request.url);

@@ -10,6 +10,7 @@
 //   - Pages:       _worker.js at the repo root re-exports this module
 
 import { SCHEMA, DEFAULTS, DEFAULT_POSTS, SECTIONS } from "./content.js";
+import { vocabularyApi } from "./vocabulary.js";
 
 const COOKIE_NAME = "cms_session";
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
@@ -647,6 +648,7 @@ async function fetchAssetFollowRedirects(env, request) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/vocabulary/')) return vocabularyApi(request, env);
     const { pathname } = url;
 
     if (pathname.startsWith("/api/")) {

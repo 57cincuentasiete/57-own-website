@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {vocabularyApi} from './vocabulary.js';
+import {localDatabase} from './vocabulary-local.mjs';
+const db=localDatabase(),env={VOCAB_DB:db,VOCAB_ENCRYPTION_KEY:Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('base64')};
+let ip=0;
+async function call(action,method='GET',data,token='',origin='https://example.com'){
+ return vocabularyApi(new Request('https://example.com/api/vocabulary/'+action,{method,headers:{Origin:origin,'Content-Type':'application/json',Cookie:token,'CF-Connecting-IP':String(ip)},...(data?{body:JSON.stringify(data)}:{})}),env);
+}
+const credentials={nickname:'Alice',password:'test password 12345'};
+const a=await call('register','POST',credentials);assert.equal(a.status,200);const alice=a.headers.get('set-cookie').split(';')[0];assert.match(a.headers.get('set-cookie'),/HttpOnly; Secure; SameSite=Strict/);
+assert.equal((await call('register','POST',{...credentials,nickname:'ALICE'})).status,409);
+assert.equal((await call('login','POST',{...credentials,password:'wrong password 123'})).status,401);
+assert.equal((await call('login','POST',{...credentials,nickname:'alice'})).status,200);
+assert.equal((await call('progress')).status,401);
+const accountId=(await (await call('progress','GET',null,alice)).json()).accountId;
+const state={version:1,settings:{maximum:40,newMaximum:8,timezone:'UTC'},cards:{word1:{due:'2026-10-01'}},days:{},events:[]};
+assert.equal((await call('progress','PUT',{state,revision:0,accountId},alice)).status,200);
+assert.equal((await call('progress','PUT',{state,revision:0,accountId},alice)).status,409);
+ip++;
+const b=await call('register','POST',{...credentials,nickname:'Bob'}),bob=b.headers.get('set-cookie').split(';')[0];
+assert.equal((await (await call('progress','GET',null,bob)).json()).state,null);
+assert.deepEqual((await (await call('progress','GET',null,alice)).json()).state,state);
+assert.equal((await call('progress','PUT',{state,revision:0,accountId},bob,'https://evil.example')).status,403);
+assert.equal((await call('progress','PUT',{state,revision:0,accountId},bob)).status,409);
+const stored=JSON.stringify(db.sqlite.prepare('SELECT * FROM vocab_users').all());
+for(const plaintext of ['Alice','Bob',credentials.password,'word1'])assert.ok(!stored.includes(plaintext));
+assert.equal((await call('logout','POST',{},alice)).status,200);
+assert.equal((await call('progress','GET',null,alice)).status,401);
+const logged=await call('login','POST',credentials),again=logged.headers.get('set-cookie').split(';')[0];
+assert.deepEqual((await (await call('progress','GET',null,again)).json()).state,state);
+db.sqlite.prepare('UPDATE vocab_sessions SET expires=0').run();assert.equal((await call('progress','GET',null,again)).status,401);
+ip++;
+for(let i=0;i<20;i++)await call('login','POST',{});
+assert.equal((await call('login','POST',credentials)).status,429);
+assert.equal((await vocabularyApi(new Request('https://example.com/api/vocabulary/progress'),{})).status,503);
+console.log('PASS: registration, login, encrypted storage, independent progress, conflicts, CSRF, logout, expiry, rate limits, missing configuration');
+db.sqlite.close();
