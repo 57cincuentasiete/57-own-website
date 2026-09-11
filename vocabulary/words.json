@@ -1,0 +1,898 @@
+[
+  {
+    "id": "ielts-001",
+    "word": "exacerbate",
+    "topic": "Advanced · verb",
+    "meaning": "Make an existing problem worse",
+    "collocation": "exacerbate inequality",
+    "example": "Unequal access to technology can exacerbate inequality."
+  },
+  {
+    "id": "ielts-002",
+    "word": "mitigate",
+    "topic": "Advanced · verb",
+    "meaning": "Reduce the severity or harmful effects of something",
+    "collocation": "mitigate environmental damage",
+    "example": "Better planning could mitigate environmental damage."
+  },
+  {
+    "id": "ielts-003",
+    "word": "alleviate",
+    "topic": "Advanced · verb",
+    "meaning": "Make suffering or a difficult condition less severe",
+    "collocation": "alleviate poverty",
+    "example": "Affordable childcare may help alleviate poverty."
+  },
+  {
+    "id": "ielts-004",
+    "word": "substantiate",
+    "topic": "Advanced · verb",
+    "meaning": "Support a claim with evidence",
+    "collocation": "substantiate a claim",
+    "example": "The author provides no data to substantiate this claim."
+  },
+  {
+    "id": "ielts-005",
+    "word": "corroborate",
+    "topic": "Advanced · verb",
+    "meaning": "Provide additional evidence supporting a statement",
+    "collocation": "corroborate findings",
+    "example": "A second survey corroborated the initial findings."
+  },
+  {
+    "id": "ielts-006",
+    "word": "refute",
+    "topic": "Advanced · verb",
+    "meaning": "Show that a claim is wrong using evidence or reasoning",
+    "collocation": "refute an argument",
+    "example": "These results refute the argument that the policy has no effect."
+  },
+  {
+    "id": "ielts-007",
+    "word": "scrutinise",
+    "topic": "Advanced · verb",
+    "meaning": "Examine something very carefully",
+    "collocation": "scrutinise evidence",
+    "example": "Researchers must scrutinise the evidence before drawing conclusions."
+  },
+  {
+    "id": "ielts-008",
+    "word": "infer",
+    "topic": "Advanced · verb",
+    "meaning": "Reach a conclusion from available evidence",
+    "collocation": "infer from data",
+    "example": "We cannot infer causation from these data alone."
+  },
+  {
+    "id": "ielts-009",
+    "word": "attribute",
+    "topic": "Advanced · verb",
+    "meaning": "Regard something as caused by something else",
+    "collocation": "attribute X to Y",
+    "example": "Some residents attribute rising rents to a housing shortage."
+  },
+  {
+    "id": "ielts-010",
+    "word": "entail",
+    "topic": "Advanced · verb",
+    "meaning": "Involve something as a necessary part or consequence",
+    "collocation": "entail substantial costs",
+    "example": "Expanding the network would entail substantial costs."
+  },
+  {
+    "id": "ielts-011",
+    "word": "undermine",
+    "topic": "Advanced · verb",
+    "meaning": "Gradually weaken or damage",
+    "collocation": "undermine confidence",
+    "example": "Inconsistent decisions can undermine public confidence."
+  },
+  {
+    "id": "ielts-012",
+    "word": "allocate",
+    "topic": "Advanced · verb",
+    "meaning": "Assign resources for a particular purpose",
+    "collocation": "allocate funding",
+    "example": "Councils should allocate more funding to road maintenance."
+  },
+  {
+    "id": "ielts-013",
+    "word": "facilitate",
+    "topic": "Advanced · verb",
+    "meaning": "Make a process easier",
+    "collocation": "facilitate learning",
+    "example": "Timely feedback can facilitate learning."
+  },
+  {
+    "id": "ielts-014",
+    "word": "incentivise",
+    "topic": "Advanced · verb",
+    "meaning": "Encourage an action through rewards or benefits",
+    "collocation": "incentivise investment",
+    "example": "Tax relief may incentivise investment in clean energy."
+  },
+  {
+    "id": "ielts-015",
+    "word": "reconcile",
+    "topic": "Advanced · verb",
+    "meaning": "Make conflicting ideas or demands compatible",
+    "collocation": "reconcile competing demands",
+    "example": "Planners must reconcile competing demands for land."
+  },
+  {
+    "id": "ielts-016",
+    "word": "disproportionate",
+    "topic": "Advanced · adjective",
+    "meaning": "Too large or small relative to something else",
+    "collocation": "disproportionate impact",
+    "example": "Transport costs have a disproportionate impact on poorer households."
+  },
+  {
+    "id": "ielts-017",
+    "word": "pervasive",
+    "topic": "Advanced · adjective",
+    "meaning": "Present or spreading throughout an area or group",
+    "collocation": "pervasive influence",
+    "example": "Advertising has a pervasive influence on consumer behaviour."
+  },
+  {
+    "id": "ielts-018",
+    "word": "inherent",
+    "topic": "Advanced · adjective",
+    "meaning": "Existing as a basic part of something",
+    "collocation": "inherent limitations",
+    "example": "The study acknowledges the inherent limitations of self-reported data."
+  },
+  {
+    "id": "ielts-019",
+    "word": "negligible",
+    "topic": "Advanced · adjective",
+    "meaning": "So small that it has little practical importance",
+    "collocation": "negligible effect",
+    "example": "The change had a negligible effect on overall demand."
+  },
+  {
+    "id": "ielts-020",
+    "word": "substantial",
+    "topic": "Advanced · adjective",
+    "meaning": "Large in amount or importance",
+    "collocation": "substantial investment",
+    "example": "Reliable public transport requires substantial investment."
+  },
+  {
+    "id": "ielts-021",
+    "word": "plausible",
+    "topic": "Advanced · adjective",
+    "meaning": "Seeming reasonable or possibly true",
+    "collocation": "plausible explanation",
+    "example": "Seasonal migration offers a plausible explanation for the decline."
+  },
+  {
+    "id": "ielts-022",
+    "word": "feasible",
+    "topic": "Advanced · adjective",
+    "meaning": "Possible and practical to carry out",
+    "collocation": "economically feasible",
+    "example": "The proposal is technically possible but may not be economically feasible."
+  },
+  {
+    "id": "ielts-023",
+    "word": "detrimental",
+    "topic": "Advanced · adjective",
+    "meaning": "Causing harm",
+    "collocation": "detrimental to health",
+    "example": "Prolonged exposure to air pollution is detrimental to health."
+  },
+  {
+    "id": "ielts-024",
+    "word": "conducive",
+    "topic": "Advanced · adjective",
+    "meaning": "Helping a particular result occur",
+    "collocation": "conducive to learning",
+    "example": "Quiet classrooms are conducive to learning."
+  },
+  {
+    "id": "ielts-025",
+    "word": "equitable",
+    "topic": "Advanced · adjective",
+    "meaning": "Fair in how people are treated or resources distributed",
+    "collocation": "equitable access",
+    "example": "Public policy should promote equitable access to healthcare."
+  },
+  {
+    "id": "ielts-026",
+    "word": "ambiguous",
+    "topic": "Advanced · adjective",
+    "meaning": "Open to more than one interpretation",
+    "collocation": "ambiguous wording",
+    "example": "Ambiguous wording can make survey responses difficult to interpret."
+  },
+  {
+    "id": "ielts-027",
+    "word": "disparity",
+    "topic": "Advanced · noun",
+    "meaning": "A noticeable difference, often involving inequality",
+    "collocation": "income disparity",
+    "example": "The report highlights income disparity between regions."
+  },
+  {
+    "id": "ielts-028",
+    "word": "implication",
+    "topic": "Advanced · noun",
+    "meaning": "A possible consequence or indirect meaning",
+    "collocation": "policy implications",
+    "example": "These findings have important policy implications."
+  },
+  {
+    "id": "ielts-029",
+    "word": "trade-off",
+    "topic": "Advanced · noun",
+    "meaning": "A balance in which gaining one benefit involves losing another",
+    "collocation": "a trade-off between",
+    "example": "There is a trade-off between convenience and privacy."
+  },
+  {
+    "id": "ielts-030",
+    "word": "resilience",
+    "topic": "Advanced · noun",
+    "meaning": "The ability to recover from difficulty or withstand disruption",
+    "collocation": "economic resilience",
+    "example": "A diverse economy can improve a region's economic resilience."
+  },
+  {
+    "id": "ielts-031",
+    "word": "rote memorisation",
+    "topic": "Education",
+    "meaning": "Learning through repetition, often without understanding",
+    "collocation": "",
+    "example": "Rote memorisation alone does not teach students to evaluate arguments."
+  },
+  {
+    "id": "ielts-032",
+    "word": "conceptual understanding",
+    "topic": "Education",
+    "meaning": "Grasp of the ideas underlying a subject",
+    "collocation": "",
+    "example": "Practical experiments can deepen conceptual understanding."
+  },
+  {
+    "id": "ielts-033",
+    "word": "formative assessment",
+    "topic": "Education",
+    "meaning": "Assessment used during learning to guide improvement",
+    "collocation": "",
+    "example": "Formative assessment helps teachers identify gaps in understanding."
+  },
+  {
+    "id": "ielts-034",
+    "word": "educational attainment",
+    "topic": "Education",
+    "meaning": "Level of education or qualifications achieved",
+    "collocation": "",
+    "example": "The survey compares educational attainment across age groups."
+  },
+  {
+    "id": "ielts-035",
+    "word": "transferable skills",
+    "topic": "Education",
+    "meaning": "Abilities useful across different jobs or situations",
+    "collocation": "",
+    "example": "Group projects can develop transferable skills such as negotiation."
+  },
+  {
+    "id": "ielts-036",
+    "word": "habitat fragmentation",
+    "topic": "Environment",
+    "meaning": "Division of a habitat into smaller, separated areas",
+    "collocation": "",
+    "example": "New roads may accelerate habitat fragmentation."
+  },
+  {
+    "id": "ielts-037",
+    "word": "biodiversity loss",
+    "topic": "Environment",
+    "meaning": "Reduction in the variety of living organisms",
+    "collocation": "",
+    "example": "Habitat protection can help limit biodiversity loss."
+  },
+  {
+    "id": "ielts-038",
+    "word": "resource depletion",
+    "topic": "Environment",
+    "meaning": "Reduction of a resource through continued use",
+    "collocation": "",
+    "example": "Excessive extraction can accelerate resource depletion."
+  },
+  {
+    "id": "ielts-039",
+    "word": "curb emissions",
+    "topic": "Environment",
+    "meaning": "Limit or reduce the release of pollutants",
+    "collocation": "",
+    "example": "Better insulation can help curb emissions from heating."
+  },
+  {
+    "id": "ielts-040",
+    "word": "ecological restoration",
+    "topic": "Environment",
+    "meaning": "Helping a damaged ecosystem recover",
+    "collocation": "",
+    "example": "Ecological restoration requires more than planting a few trees."
+  },
+  {
+    "id": "ielts-041",
+    "word": "algorithmic bias",
+    "topic": "Technology",
+    "meaning": "Systematic unfairness in an algorithm's outcomes",
+    "collocation": "",
+    "example": "Unrepresentative training data can contribute to algorithmic bias."
+  },
+  {
+    "id": "ielts-042",
+    "word": "digital exclusion",
+    "topic": "Technology",
+    "meaning": "Inability to participate fully because of digital barriers",
+    "collocation": "",
+    "example": "Online-only services risk worsening digital exclusion."
+  },
+  {
+    "id": "ielts-043",
+    "word": "informed consent",
+    "topic": "Technology",
+    "meaning": "Agreement based on adequate understanding",
+    "collocation": "",
+    "example": "Clear explanations are necessary for informed consent."
+  },
+  {
+    "id": "ielts-044",
+    "word": "safeguard privacy",
+    "topic": "Technology",
+    "meaning": "Protect personal information or private life",
+    "collocation": "",
+    "example": "Services should safeguard privacy by limiting unnecessary data collection."
+  },
+  {
+    "id": "ielts-045",
+    "word": "automate routine tasks",
+    "topic": "Technology",
+    "meaning": "Use technology to perform repetitive activities",
+    "collocation": "",
+    "example": "Software can automate routine tasks while staff handle complex cases."
+  },
+  {
+    "id": "ielts-046",
+    "word": "preventive care",
+    "topic": "Health",
+    "meaning": "Healthcare intended to prevent illness",
+    "collocation": "",
+    "example": "Preventive care includes vaccination and screening."
+  },
+  {
+    "id": "ielts-047",
+    "word": "sedentary lifestyle",
+    "topic": "Health",
+    "meaning": "A way of life involving little physical activity",
+    "collocation": "",
+    "example": "Desk-based work can contribute to a sedentary lifestyle."
+  },
+  {
+    "id": "ielts-048",
+    "word": "health disparities",
+    "topic": "Health",
+    "meaning": "Differences in health outcomes between groups",
+    "collocation": "",
+    "example": "The study examines health disparities between neighbourhoods."
+  },
+  {
+    "id": "ielts-049",
+    "word": "continuity of care",
+    "topic": "Health",
+    "meaning": "Coordinated healthcare maintained over time",
+    "collocation": "",
+    "example": "Frequent changes of provider can disrupt continuity of care."
+  },
+  {
+    "id": "ielts-050",
+    "word": "strain on services",
+    "topic": "Health",
+    "meaning": "Pressure on the capacity of services",
+    "collocation": "",
+    "example": "Staff shortages place additional strain on services."
+  },
+  {
+    "id": "ielts-051",
+    "word": "precarious employment",
+    "topic": "Work",
+    "meaning": "Work with limited security or predictability",
+    "collocation": "",
+    "example": "Precarious employment can make financial planning difficult."
+  },
+  {
+    "id": "ielts-052",
+    "word": "labour productivity",
+    "topic": "Work",
+    "meaning": "Output produced per unit of labour input",
+    "collocation": "",
+    "example": "Better equipment may increase labour productivity."
+  },
+  {
+    "id": "ielts-053",
+    "word": "skills mismatch",
+    "topic": "Work",
+    "meaning": "Gap between workers' skills and employers' needs",
+    "collocation": "",
+    "example": "Targeted training could address a skills mismatch."
+  },
+  {
+    "id": "ielts-054",
+    "word": "employee retention",
+    "topic": "Work",
+    "meaning": "Ability to keep staff",
+    "collocation": "",
+    "example": "Flexible schedules may improve employee retention."
+  },
+  {
+    "id": "ielts-055",
+    "word": "occupational mobility",
+    "topic": "Work",
+    "meaning": "Ability to move between jobs or occupations",
+    "collocation": "",
+    "example": "Retraining can support occupational mobility."
+  },
+  {
+    "id": "ielts-056",
+    "word": "purchasing power",
+    "topic": "Economy",
+    "meaning": "Amount of goods or services money can buy",
+    "collocation": "",
+    "example": "Rising prices can erode purchasing power."
+  },
+  {
+    "id": "ielts-057",
+    "word": "fiscal constraints",
+    "topic": "Economy",
+    "meaning": "Limits on government spending or budget choices",
+    "collocation": "",
+    "example": "Fiscal constraints may delay infrastructure repairs."
+  },
+  {
+    "id": "ielts-058",
+    "word": "income redistribution",
+    "topic": "Economy",
+    "meaning": "Shifting income between groups through policy",
+    "collocation": "",
+    "example": "Progressive taxation is one mechanism for income redistribution."
+  },
+  {
+    "id": "ielts-059",
+    "word": "market concentration",
+    "topic": "Economy",
+    "meaning": "Extent to which a few firms dominate a market",
+    "collocation": "",
+    "example": "A merger could increase market concentration."
+  },
+  {
+    "id": "ielts-060",
+    "word": "opportunity cost",
+    "topic": "Economy",
+    "meaning": "Value of the best alternative forgone",
+    "collocation": "",
+    "example": "The opportunity cost of the project is the next-best use of its funding."
+  },
+  {
+    "id": "ielts-061",
+    "word": "urban sprawl",
+    "topic": "Cities",
+    "meaning": "Outward spread of low-density urban development",
+    "collocation": "",
+    "example": "Urban sprawl can increase dependence on cars."
+  },
+  {
+    "id": "ielts-062",
+    "word": "housing affordability",
+    "topic": "Cities",
+    "meaning": "Extent to which people can afford housing",
+    "collocation": "",
+    "example": "Housing affordability depends on both prices and incomes."
+  },
+  {
+    "id": "ielts-063",
+    "word": "mixed-use development",
+    "topic": "Cities",
+    "meaning": "Development combining homes, shops, or other uses",
+    "collocation": "",
+    "example": "Mixed-use development can bring services closer to residents."
+  },
+  {
+    "id": "ielts-064",
+    "word": "transport connectivity",
+    "topic": "Cities",
+    "meaning": "How well places are linked by transport",
+    "collocation": "",
+    "example": "Improved transport connectivity could widen access to jobs."
+  },
+  {
+    "id": "ielts-065",
+    "word": "infrastructure bottleneck",
+    "topic": "Cities",
+    "meaning": "Capacity limit that slows a wider system",
+    "collocation": "",
+    "example": "The narrow bridge has become an infrastructure bottleneck."
+  },
+  {
+    "id": "ielts-066",
+    "word": "social cohesion",
+    "topic": "Society",
+    "meaning": "Strength of relationships and belonging within a society",
+    "collocation": "",
+    "example": "Shared public spaces can support social cohesion."
+  },
+  {
+    "id": "ielts-067",
+    "word": "civic participation",
+    "topic": "Society",
+    "meaning": "Involvement in community and public affairs",
+    "collocation": "",
+    "example": "Local consultations can encourage civic participation."
+  },
+  {
+    "id": "ielts-068",
+    "word": "intergenerational equity",
+    "topic": "Society",
+    "meaning": "Fairness between generations",
+    "collocation": "",
+    "example": "Pension reform raises questions of intergenerational equity."
+  },
+  {
+    "id": "ielts-069",
+    "word": "cultural heritage",
+    "topic": "Society",
+    "meaning": "Traditions and material remains inherited from the past",
+    "collocation": "",
+    "example": "Restoring the theatre would help preserve cultural heritage."
+  },
+  {
+    "id": "ielts-070",
+    "word": "social exclusion",
+    "topic": "Society",
+    "meaning": "Barriers preventing full participation in society",
+    "collocation": "",
+    "example": "Inaccessible transport can contribute to social exclusion."
+  },
+  {
+    "id": "ielts-071",
+    "word": "deterrent effect",
+    "topic": "Law",
+    "meaning": "Capacity to discourage an action",
+    "collocation": "",
+    "example": "The deterrent effect of a penalty depends partly on enforcement."
+  },
+  {
+    "id": "ielts-072",
+    "word": "rehabilitation",
+    "topic": "Law",
+    "meaning": "Support for returning to a stable, constructive life",
+    "collocation": "",
+    "example": "Education can form part of offender rehabilitation."
+  },
+  {
+    "id": "ielts-073",
+    "word": "proportionate penalty",
+    "topic": "Law",
+    "meaning": "Punishment appropriate to the seriousness of an offence",
+    "collocation": "",
+    "example": "Courts should impose a proportionate penalty."
+  },
+  {
+    "id": "ielts-074",
+    "word": "regulatory oversight",
+    "topic": "Law",
+    "meaning": "Supervision to ensure rules are followed",
+    "collocation": "",
+    "example": "Effective regulatory oversight requires adequate staffing."
+  },
+  {
+    "id": "ielts-075",
+    "word": "procedural fairness",
+    "topic": "Law",
+    "meaning": "Fairness in the process used to reach a decision",
+    "collocation": "",
+    "example": "A right of appeal can strengthen procedural fairness."
+  },
+  {
+    "id": "ielts-076",
+    "word": "editorial independence",
+    "topic": "Media",
+    "meaning": "Freedom to make editorial decisions without improper interference",
+    "collocation": "",
+    "example": "Public funding need not eliminate editorial independence."
+  },
+  {
+    "id": "ielts-077",
+    "word": "misleading claim",
+    "topic": "Media",
+    "meaning": "Statement that creates a false impression",
+    "collocation": "",
+    "example": "The advertisement makes a misleading claim about savings."
+  },
+  {
+    "id": "ielts-078",
+    "word": "vested interest",
+    "topic": "Media",
+    "meaning": "Personal stake that may influence judgement",
+    "collocation": "",
+    "example": "Readers should consider whether a commentator has a vested interest."
+  },
+  {
+    "id": "ielts-079",
+    "word": "media literacy",
+    "topic": "Media",
+    "meaning": "Ability to critically understand and evaluate media",
+    "collocation": "",
+    "example": "Media literacy helps people assess the credibility of sources."
+  },
+  {
+    "id": "ielts-080",
+    "word": "public scrutiny",
+    "topic": "Media",
+    "meaning": "Close examination by the public",
+    "collocation": "",
+    "example": "Major spending decisions should be open to public scrutiny."
+  },
+  {
+    "id": "ielts-081",
+    "word": "rise by / rise to",
+    "topic": "Task 1",
+    "meaning": "By gives the change; to gives the final value",
+    "collocation": "",
+    "example": "Sales rose by 20 units to 120."
+  },
+  {
+    "id": "ielts-082",
+    "word": "percentage points",
+    "topic": "Task 1",
+    "meaning": "Absolute difference between percentages",
+    "collocation": "",
+    "example": "A rise from 20% to 30% is 10 percentage points, or a 50% relative increase."
+  },
+  {
+    "id": "ielts-083",
+    "word": "account for",
+    "topic": "Task 1",
+    "meaning": "Represent a share of a total",
+    "collocation": "",
+    "example": "Rail accounted for 30% of journeys."
+  },
+  {
+    "id": "ielts-084",
+    "word": "stand at",
+    "topic": "Task 1",
+    "meaning": "Have a stated value at a particular time",
+    "collocation": "",
+    "example": "The rate stood at 8% in 2020."
+  },
+  {
+    "id": "ielts-085",
+    "word": "peak at",
+    "topic": "Task 1",
+    "meaning": "Reach the highest observed value",
+    "collocation": "",
+    "example": "Attendance peaked at 600 in July."
+  },
+  {
+    "id": "ielts-086",
+    "word": "reach a low of",
+    "topic": "Task 1",
+    "meaning": "Reach the lowest observed value",
+    "collocation": "",
+    "example": "Output reached a low of 40 tonnes."
+  },
+  {
+    "id": "ielts-087",
+    "word": "level off",
+    "topic": "Task 1",
+    "meaning": "Stop rising or falling and become stable",
+    "collocation": "",
+    "example": "After increasing, sales levelled off at around 500 units."
+  },
+  {
+    "id": "ielts-088",
+    "word": "fluctuate between",
+    "topic": "Task 1",
+    "meaning": "Move up and down within a range",
+    "collocation": "",
+    "example": "The figure fluctuated between 40 and 50."
+  },
+  {
+    "id": "ielts-089",
+    "word": "marginal / marked",
+    "topic": "Task 1",
+    "meaning": "Small / clearly noticeable",
+    "collocation": "",
+    "example": "There was a marginal increase in A but a marked decline in B."
+  },
+  {
+    "id": "ielts-090",
+    "word": "outstrip",
+    "topic": "Task 1",
+    "meaning": "Exceed another quantity or its growth",
+    "collocation": "",
+    "example": "Demand outstripped supply throughout the period."
+  },
+  {
+    "id": "ielts-091",
+    "word": "respectively",
+    "topic": "Task 1",
+    "meaning": "Pair values with items in the same order",
+    "collocation": "",
+    "example": "A and B recorded 20 and 30 sales, respectively."
+  },
+  {
+    "id": "ielts-092",
+    "word": "converge / diverge",
+    "topic": "Task 1",
+    "meaning": "Become closer / move further apart",
+    "collocation": "",
+    "example": "The two rates converged towards the end of the period."
+  },
+  {
+    "id": "ielts-093",
+    "word": "remain broadly stable",
+    "topic": "Task 1",
+    "meaning": "Show little overall change",
+    "collocation": "",
+    "example": "Employment remained broadly stable over the decade."
+  },
+  {
+    "id": "ielts-094",
+    "word": "be converted into",
+    "topic": "Task 1",
+    "meaning": "Change to a different use or form",
+    "collocation": "",
+    "example": "The warehouse was converted into apartments."
+  },
+  {
+    "id": "ielts-095",
+    "word": "be adjacent to",
+    "topic": "Task 1",
+    "meaning": "Be next to",
+    "collocation": "",
+    "example": "The new car park is adjacent to the station."
+  },
+  {
+    "id": "ielts-096",
+    "word": "undergo filtration",
+    "topic": "Task 1",
+    "meaning": "Pass through a filtering stage",
+    "collocation": "",
+    "example": "The water undergoes filtration before storage."
+  },
+  {
+    "id": "ielts-097",
+    "word": "get to grips with",
+    "topic": "Speaking",
+    "meaning": "Begin to understand or handle something difficult",
+    "collocation": "",
+    "example": "It took me a while to get to grips with the software."
+  },
+  {
+    "id": "ielts-098",
+    "word": "weigh up",
+    "topic": "Speaking",
+    "meaning": "Consider advantages and disadvantages",
+    "collocation": "",
+    "example": "I weighed up the cost before joining the course."
+  },
+  {
+    "id": "ielts-099",
+    "word": "live up to expectations",
+    "topic": "Speaking",
+    "meaning": "Be as good as expected",
+    "collocation": "",
+    "example": "The concert really lived up to my expectations."
+  },
+  {
+    "id": "ielts-100",
+    "word": "take for granted",
+    "topic": "Speaking",
+    "meaning": "Fail to appreciate something because it seems normal",
+    "collocation": "",
+    "example": "I used to take reliable public transport for granted."
+  },
+  {
+    "id": "ielts-101",
+    "word": "a steep learning curve",
+    "topic": "Speaking",
+    "meaning": "A period requiring a lot of learning quickly",
+    "collocation": "",
+    "example": "My first month in the job was a steep learning curve."
+  },
+  {
+    "id": "ielts-102",
+    "word": "a mixed blessing",
+    "topic": "Speaking",
+    "meaning": "Something with both benefits and drawbacks",
+    "collocation": "",
+    "example": "Working from home has been a mixed blessing for me."
+  },
+  {
+    "id": "ielts-103",
+    "word": "strike a balance",
+    "topic": "Speaking",
+    "meaning": "Find a suitable middle position",
+    "collocation": "",
+    "example": "I try to strike a balance between work and exercise."
+  },
+  {
+    "id": "ielts-104",
+    "word": "make ends meet",
+    "topic": "Speaking",
+    "meaning": "Have enough money for essential expenses",
+    "collocation": "",
+    "example": "When I was a student, I worked weekends to make ends meet."
+  },
+  {
+    "id": "ielts-105",
+    "word": "broaden my horizons",
+    "topic": "Speaking",
+    "meaning": "Expand my experience or understanding",
+    "collocation": "",
+    "example": "Living abroad broadened my horizons."
+  },
+  {
+    "id": "ielts-106",
+    "word": "on the same wavelength",
+    "topic": "Speaking",
+    "meaning": "Understand each other's ideas or attitudes",
+    "collocation": "",
+    "example": "My colleague and I are usually on the same wavelength."
+  },
+  {
+    "id": "ielts-107",
+    "word": "keep something in perspective",
+    "topic": "Speaking",
+    "meaning": "Judge its importance realistically",
+    "collocation": "",
+    "example": "I try to keep minor setbacks in perspective."
+  },
+  {
+    "id": "ielts-108",
+    "word": "put something off",
+    "topic": "Speaking",
+    "meaning": "Postpone something",
+    "collocation": "",
+    "example": "I'd been putting off learning to drive."
+  },
+  {
+    "id": "ielts-109",
+    "word": "come across",
+    "topic": "Speaking",
+    "meaning": "Encounter unexpectedly",
+    "collocation": "",
+    "example": "I came across a small bookshop near the station."
+  },
+  {
+    "id": "ielts-110",
+    "word": "grow on someone",
+    "topic": "Speaking",
+    "meaning": "Become more appealing over time",
+    "collocation": "",
+    "example": "The neighbourhood has really grown on me."
+  },
+  {
+    "id": "ielts-111",
+    "word": "unwind",
+    "topic": "Speaking",
+    "meaning": "Relax after effort or stress",
+    "collocation": "",
+    "example": "I usually unwind by cooking dinner."
+  },
+  {
+    "id": "ielts-112",
+    "word": "rewarding",
+    "topic": "Speaking",
+    "meaning": "Giving satisfaction or a sense of achievement",
+    "collocation": "",
+    "example": "Helping younger students was very rewarding."
+  }
+]
