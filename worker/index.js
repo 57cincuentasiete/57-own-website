@@ -646,6 +646,16 @@ async function fetchAssetFollowRedirects(env, request) {
 
 /* ---------- fetch handler ---------- */
 
+function setPrivateArchiveHeaders(headers) {
+  headers.set("Cache-Control", "private, no-store");
+  headers.set("CDN-Cache-Control", "no-store");
+  headers.set("Cloudflare-CDN-Cache-Control", "no-store");
+  if (!/(?:^|,)\s*Cookie\s*(?:,|$)/i.test(headers.get("Vary") || "")) {
+    headers.append("Vary", "Cookie");
+  }
+  headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+}
+
 function privateCatalogueResponse(body, status = 200, extraHeaders = {}) {
   const headers = new Headers(extraHeaders);
   headers.delete("content-length");
@@ -653,9 +663,7 @@ function privateCatalogueResponse(body, status = 200, extraHeaders = {}) {
   headers.delete("etag");
   headers.delete("last-modified");
   headers.set("Content-Type", "text/html; charset=utf-8");
-  headers.set("Cache-Control", "private, no-store");
-  headers.set("Vary", "Cookie");
-  headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+  setPrivateArchiveHeaders(headers);
   return new Response(body, {
     status,
     headers,
@@ -663,15 +671,6 @@ function privateCatalogueResponse(body, status = 200, extraHeaders = {}) {
 }
 
 async function archiveCatalogue(request, env, url) {
-  if (!env.CONTENT_KV) {
-    return privateCatalogueResponse("Catalogue unavailable", 503);
-  }
-  if (!(await isAuthed(request, env))) {
-    const loginUrl = new URL("/", url);
-    loginUrl.searchParams.set("admin", "1");
-    loginUrl.searchParams.set("next", "/archive");
-    return privateCatalogueResponse(null, 302, { Location: loginUrl.toString() });
-  }
   if (request.method !== "GET" && request.method !== "HEAD") {
     return privateCatalogueResponse("Method not allowed", 405, { Allow: "GET, HEAD" });
   }
@@ -693,35 +692,71 @@ async function archiveCatalogue(request, env, url) {
   return privateCatalogueResponse(request.method === "HEAD" ? null : html, 200, template.headers);
 }
 
+function privateArchiveResponse(response, request) {
+  const headers = new Headers(response.headers);
+  setPrivateArchiveHeaders(headers);
+  return new Response(request.method === "HEAD" ? null : response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+async function handleArchive(request, env, url, pathname) {
+  // Authenticate every archive request before redirects or static asset reads.
+  if (!env.CONTENT_KV) {
+    return privateCatalogueResponse("Archive unavailable", 503);
+  }
+  if (!(await isAuthed(request, env))) {
+    const loginUrl = new URL("/", url);
+    loginUrl.searchParams.set("admin", "1");
+    loginUrl.searchParams.set("next", "/archive");
+    return privateCatalogueResponse(null, 302, { Location: loginUrl.toString() });
+  }
+  if (/^\/archive(?:\/|\/index(?:\.html)?\/?)?$/.test(pathname)) {
+    return archiveCatalogue(request, env, url);
+  }
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return privateCatalogueResponse("Method not allowed", 405, { Allow: "GET, HEAD" });
+  }
+  url.pathname = pathname;
+  if (pathname === "/archive/zzl19") {
+    url.pathname += "/";
+    return Response.redirect(url.toString(), 301);
+  }
+  const archive = await env.ASSETS.fetch(new Request(url, request));
+  const headers = new Headers(archive.headers);
+  if (pathname.startsWith("/archive/zzl19/")) {
+    headers.set("Content-Security-Policy", "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; connect-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; manifest-src 'self'");
+  }
+  if (pathname.endsWith(".webmanifest")) headers.set("Content-Type", "application/manifest+json");
+  return new Response(archive.body, { status: archive.status, statusText: archive.statusText, headers });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname.startsWith('/api/vocabulary/')) return vocabularyApi(request, env);
     const { pathname } = url;
 
-    // Guard every static alias before requesting the catalogue asset.
-    // Decode first so percent-encoded index paths cannot bypass the login.
+    // Normalize encoded separators and dot segments before the archive guard.
     let decodedPath;
     try {
-      decodedPath = decodeURIComponent(pathname).replace(/\/{2,}/g, "/");
+      decodedPath = pathname;
+      for (let i = 0; i < 8 && /%[0-9a-f]{2}/i.test(decodedPath); i++) {
+        decodedPath = decodeURIComponent(decodedPath);
+      }
+      if (/%[0-9a-f]{2}/i.test(decodedPath)) throw new Error("URL encoding too deep");
+      decodedPath = new URL(url.origin + decodedPath.replace(/\/{2,}/g, "/")).pathname;
     } catch {
       return new Response("Bad request", { status: 400 });
     }
-    if (/^\/archive(?:\/|\/index(?:\.html)?\/?)?$/.test(decodedPath)) {
-      return archiveCatalogue(request, env, url);
-    }
-
-    // Archived gifts are self-contained snapshots, independent of CMS content.
-    if (pathname === "/archive/zzl19") {
-      url.pathname += "/";
-      return Response.redirect(url.toString(), 301);
-    }
-    if (pathname.startsWith("/archive/zzl19/")) {
-      const archive = await env.ASSETS.fetch(request);
-      const headers = new Headers(archive.headers);
-      headers.set("Content-Security-Policy", "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; connect-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; manifest-src 'self'");
-      if (pathname.endsWith(".webmanifest")) headers.set("Content-Type", "application/manifest+json");
-      return new Response(archive.body, { status: archive.status, statusText: archive.statusText, headers });
+    if (decodedPath.toLowerCase() === "/archive" || decodedPath.toLowerCase().startsWith("/archive/")) {
+      try {
+        return privateArchiveResponse(await handleArchive(request, env, url, decodedPath), request);
+      } catch {
+        return privateArchiveResponse(privateCatalogueResponse("Archive unavailable", 503), request);
+      }
     }
 
     if (pathname.startsWith("/api/")) {

@@ -33,12 +33,13 @@ and signs session cookies with a secret.
 
 After signing in, click **Archive catalogue** in the admin panel to open
 `/archive`. Guests are sent to the existing sign-in popup; successful login
-returns them to the catalogue. The Worker protects the catalogue and its
-index aliases, and catalogue responses are private and never cached.
+returns them to the catalogue. The Worker protects every page and asset under
+`/archive`, including encoded URL aliases. All archive responses are private
+and never cached.
 
 The catalogue currently links to the birthday snapshot at `/archive/zzl19/`.
-Individual snapshots retain their existing public direct links and do not use
-CMS content injection. When adding a snapshot under `archive/<slug>/`, add its
+Snapshots require the same admin login and do not use CMS content injection.
+When adding a snapshot under `archive/<slug>/`, add its
 title, date and description to `worker/archives.js` to list it here.
 
 Run `node worker/archive-test.mjs` to check catalogue access and archive links.
