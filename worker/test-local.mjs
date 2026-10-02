@@ -318,7 +318,7 @@ async function selfTest() {
   res = await fetch(base + "/admin/", { headers: { Cookie: cookie } });
   text = await res.text();
   check("admin panel serves when signed in", res.status === 200 && text.includes('id="app"'), `${res.status}`);
-  check("admin assets versioned", text.includes("panel.js") && text.includes("panel.css"));
+  check("admin assets referenced", text.includes("panel.js") && text.includes("admin.css"));
 
   res = await fetch(base + "/admin/panel.js", { headers: { Cookie: cookie } });
   check(

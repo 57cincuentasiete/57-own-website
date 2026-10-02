@@ -346,6 +346,7 @@
       '<div class="admin-topbar-inner">' +
       '<span class="admin-brand">57<span class="admin-brand-sub">admin</span></span>' +
       '<div class="admin-actions">' +
+      '<a class="btn btn-outline admin-btn-sm" href="/archive">Archive catalogue</a>' +
       '<a class="btn btn-outline admin-btn-sm" href="../index.html" target="_blank" rel="noopener">View site</a>' +
       '<button type="button" class="theme-toggle" aria-label="Toggle dark mode">\ud83c\udf19</button>' +
       '<button type="button" class="btn btn-outline admin-btn-sm" data-action="logout">Sign out</button>' +

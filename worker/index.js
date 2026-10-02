@@ -11,6 +11,7 @@
 
 import { SCHEMA, DEFAULTS, DEFAULT_POSTS, SECTIONS } from "./content.js";
 import { vocabularyApi } from "./vocabulary.js";
+import { ARCHIVES } from "./archives.js";
 
 const COOKIE_NAME = "cms_session";
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
@@ -645,11 +646,70 @@ async function fetchAssetFollowRedirects(env, request) {
 
 /* ---------- fetch handler ---------- */
 
+function privateCatalogueResponse(body, status = 200, extraHeaders = {}) {
+  const headers = new Headers(extraHeaders);
+  headers.delete("content-length");
+  headers.delete("content-encoding");
+  headers.delete("etag");
+  headers.delete("last-modified");
+  headers.set("Content-Type", "text/html; charset=utf-8");
+  headers.set("Cache-Control", "private, no-store");
+  headers.set("Vary", "Cookie");
+  headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+  return new Response(body, {
+    status,
+    headers,
+  });
+}
+
+async function archiveCatalogue(request, env, url) {
+  if (!env.CONTENT_KV) {
+    return privateCatalogueResponse("Catalogue unavailable", 503);
+  }
+  if (!(await isAuthed(request, env))) {
+    const loginUrl = new URL("/", url);
+    loginUrl.searchParams.set("admin", "1");
+    loginUrl.searchParams.set("next", "/archive");
+    return privateCatalogueResponse(null, 302, { Location: loginUrl.toString() });
+  }
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return privateCatalogueResponse("Method not allowed", 405, { Allow: "GET, HEAD" });
+  }
+  const template = await fetchAssetFollowRedirects(
+    env, new Request(new URL("/archive/index.html", url))
+  );
+  if (!template.ok) return privateCatalogueResponse("Catalogue unavailable", 503);
+  const entries = `<div class="archive-grid">${ARCHIVES.map((entry) => `
+    <article class="archive-card">
+      <p class="archive-card-meta">${escapeHtml(entry.date)}</p>
+      <h2>${escapeHtml(entry.title)}</h2>
+      <p>${escapeHtml(entry.description)}</p>
+      <a class="btn btn-outline" href="/archive/${encodeURIComponent(entry.slug)}/">Open archive</a>
+    </article>`).join("")}</div>`;
+  const html = (await template.text()).replace(
+    /<!-- ARCHIVE:entries -->[\s\S]*?<!-- \/ARCHIVE:entries -->/,
+    () => entries
+  );
+  return privateCatalogueResponse(request.method === "HEAD" ? null : html, 200, template.headers);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname.startsWith('/api/vocabulary/')) return vocabularyApi(request, env);
     const { pathname } = url;
+
+    // Guard every static alias before requesting the catalogue asset.
+    // Decode first so percent-encoded index paths cannot bypass the login.
+    let decodedPath;
+    try {
+      decodedPath = decodeURIComponent(pathname).replace(/\/{2,}/g, "/");
+    } catch {
+      return new Response("Bad request", { status: 400 });
+    }
+    if (/^\/archive(?:\/|\/index(?:\.html)?\/?)?$/.test(decodedPath)) {
+      return archiveCatalogue(request, env, url);
+    }
 
     // Archived gifts are self-contained snapshots, independent of CMS content.
     if (pathname === "/archive/zzl19") {

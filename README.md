@@ -29,6 +29,20 @@ invalidated immediately.
 The password is never stored in plain text. The Worker compares SHA-256 hashes
 and signs session cookies with a secret.
 
+## Archive catalogue
+
+After signing in, click **Archive catalogue** in the admin panel to open
+`/archive`. Guests are sent to the existing sign-in popup; successful login
+returns them to the catalogue. The Worker protects the catalogue and its
+index aliases, and catalogue responses are private and never cached.
+
+The catalogue currently links to the birthday snapshot at `/archive/zzl19/`.
+Individual snapshots retain their existing public direct links and do not use
+CMS content injection. When adding a snapshot under `archive/<slug>/`, add its
+title, date and description to `worker/archives.js` to list it here.
+
+Run `node worker/archive-test.mjs` to check catalogue access and archive links.
+
 ## How it works
 
 - A Cloudflare Worker (`worker/index.js`) serves the static site through the

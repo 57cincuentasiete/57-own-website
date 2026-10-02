@@ -288,6 +288,18 @@
 }
 
 @media (max-width: 560px) {
+  .admin-topbar-inner {
+    height: auto;
+    min-height: 64px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .admin-actions {
+    flex-wrap: wrap;
+  }
+
   .admin-topbar-inner,
   .admin-main,
   .admin-tabs {

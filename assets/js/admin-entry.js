@@ -43,8 +43,12 @@
   // same sign-in popup appears without the visitor having to click the
   // Admin button themselves.
   var params = new URLSearchParams(window.location.search);
+  // Only this known internal destination is accepted; never redirect to a
+  // user-supplied host after login.
+  var nextPage = params.get("next") === "/archive" ? "/archive" : "/admin/";
   if (params.get("admin") === "1") {
     params.delete("admin");
+    params.delete("next");
     var cleanUrl =
       window.location.pathname +
       (params.toString() ? "?" + params.toString() : "") +
@@ -79,7 +83,7 @@
       })
       .then(function (result) {
         if (result.status === 200 && result.data.ok) {
-          window.location.href = "/admin/";
+          window.location.href = nextPage;
         } else {
           errorEl.textContent =
             (result.data && result.data.message) || "Sign in failed. Try again.";
