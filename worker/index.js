@@ -651,6 +651,19 @@ export default {
     if (url.pathname.startsWith('/api/vocabulary/')) return vocabularyApi(request, env);
     const { pathname } = url;
 
+    // Archived gifts are self-contained snapshots, independent of CMS content.
+    if (pathname === "/archive/zzl19") {
+      url.pathname += "/";
+      return Response.redirect(url.toString(), 301);
+    }
+    if (pathname.startsWith("/archive/zzl19/")) {
+      const archive = await env.ASSETS.fetch(request);
+      const headers = new Headers(archive.headers);
+      headers.set("Content-Security-Policy", "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; connect-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; manifest-src 'self'");
+      if (pathname.endsWith(".webmanifest")) headers.set("Content-Type", "application/manifest+json");
+      return new Response(archive.body, { status: archive.status, statusText: archive.statusText, headers });
+    }
+
     if (pathname.startsWith("/api/")) {
       return handleApi(request, env, url);
     }

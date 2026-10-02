@@ -1,0 +1,33 @@
+{
+  "name": "Happy 19th Birthday, Jason Zhu",
+  "short_name": "Jason — 19",
+  "description": "A small handcrafted birthday card for Jason Zhu's nineteenth birthday, from Fiftyseven.",
+  "start_url": "/archive/zzl19/",
+  "scope": "/archive/zzl19/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FBF5EA",
+  "theme_color": "#FBF5EA",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/archive/zzl19/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/archive/zzl19/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/archive/zzl19/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

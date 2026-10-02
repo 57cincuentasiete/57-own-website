@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Nineteen">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#FDF9F0"/>
+      <stop offset="1" stop-color="#F2E3C9"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#paper)"/>
+  <path d="M31 9 C44 8 55 15 55 32 C55 49 44 56 31 56 C18 56 9 49 9 32 C9 16 19 10 30 9 C37 8.6 43 10.6 48 14"
+        fill="none" stroke="#B79CE0" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/>
+  <text x="32" y="45" text-anchor="middle"
+        font-family="Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
+        font-size="36" letter-spacing="-1.5" fill="#2E1B33">19</text>
+</svg>
