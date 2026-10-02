@@ -46,9 +46,14 @@
     var finished = false;
 
     function fit() {
-      w = surface.clientWidth;
-      h = surface.clientHeight;
-      scale = Math.min(window.devicePixelRatio || 1, 2);
+      var nextWidth = surface.clientWidth;
+      var nextHeight = surface.clientHeight;
+      var nextScale = Math.min(window.devicePixelRatio || 1, 2);
+      if (!nextWidth || !nextHeight) return;
+      if (w === nextWidth && h === nextHeight && scale === nextScale) return;
+      w = nextWidth;
+      h = nextHeight;
+      scale = nextScale;
       surface.width = Math.round(w * scale);
       surface.height = Math.round(h * scale);
       brush.setTransform(scale, 0, 0, scale, 0, 0);
@@ -86,6 +91,11 @@
     function draw(now) {
       var elapsed = (now - started) / 1000;
       if (elapsed >= 6 || reduced()) { stop(); return; }
+      // Mobile first-load layout and browser chrome can change this box
+      // without a window resize. Match the bitmap before every paint so
+      // the browser never stretches yesterday's canvas into today's box.
+      fit();
+      if (!w || !h) { animation = requestAnimationFrame(draw); return; }
       brush.clearRect(0, 0, w, h);
       // A restrained shower of foil stars frames the greeting.
       for (var s = 0; s < 38; s++) {
